@@ -1,0 +1,202 @@
+package com.CabBooking;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class CabBookingApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(CabBookingApplication.class, args);
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+package com.CabBooking.Controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.CabBooking.Entity.CabBooking;
+import com.CabBooking.Repo.StdRepo;
+
+@RestController
+public class StdController {
+	
+	@Autowired
+	private StdRepo repo;
+	
+	@GetMapping("/Bookingdetails")
+	public List<CabBooking> getAlldetails(){
+		return repo.findAll();
+	}
+	
+	@GetMapping("/Bookingdetails/{mobileNumber}")
+	public List<CabBooking> getAlldetailsByNo(@PathVariable Long mobileNumber){
+		return repo.findByMobileNumber(mobileNumber);
+	}
+	
+	@PostMapping("/Bookingsave")
+	public CabBooking AddDetails(@RequestBody CabBooking Cab) {
+		return repo.save(Cab);
+	}
+	
+	@PutMapping("/Bookingupdate")
+	public CabBooking UpdateDetails(@RequestBody CabBooking Cab) {
+		return repo.save(Cab);
+	}
+	
+	@DeleteMapping("Bookingdelete/{tripid}")
+	public void deleteDetail(@PathVariable int tripid) {
+		repo.deleteById(tripid);
+	}
+}
+
+
+
+
+
+
+
+
+package com.CabBooking.Entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity(name = "cabbooking")
+public class CabBooking {
+	@Id
+	private int tripid;
+	@Column(name = "MobileNumber")
+	private Long mobileNumber;
+	@Column(name = "PickUpLocation")
+	private String PickUpLocation;
+	@Column(name = "dropOffLocation")
+	private String dropOffLocation;
+	@Column(name = "isCancelled")
+	private Boolean isCancelled;
+	
+	public int getTripid() {
+		return tripid;
+	}
+	public void setTripid(int tripid) {
+		this.tripid = tripid;
+	}
+	public Long getMobileNumber() {
+		return mobileNumber;
+	}
+	public void setMobileNumber(Long mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+	public String getPickUpLocation() {
+		return PickUpLocation;
+	}
+	public void setPickUpLocation(String pickUpLocation) {
+		PickUpLocation = pickUpLocation;
+	}
+	public String getDropOffLocation() {
+		return dropOffLocation;
+	}
+	public void setDropOffLocation(String dropOffLocation) {
+		this.dropOffLocation = dropOffLocation;
+	}
+	
+	public Boolean getIsCancelled() {
+		return isCancelled;
+	}
+	public void setIsCancelled(Boolean isCancelled) {
+		this.isCancelled = isCancelled;
+	}
+	@Override
+	public String toString() {
+		return "CabBooking [tripid=" + tripid + ", mobileNumber=" + mobileNumber + ", PickUpLocation=" + PickUpLocation
+				+ ", dropOffLocation=" + dropOffLocation + ", isCancelled=" + isCancelled + "]";
+	}
+	
+}
+
+
+
+
+
+package com.CabBooking.Repo;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.CabBooking.Entity.CabBooking;
+
+@Repository
+public interface StdRepo extends JpaRepository<CabBooking, Integer> {
+
+	List<CabBooking> findByMobileNumber(Long mobileNumber);
+
+}
+
+
+
+
+spring.application.name=CabBooking
+server.port = 8080
+spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=TRUE
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+
+spring.h2.console.enabled=true
+
+spring.h2.console.path=/h2-console
+spring.h2.console.settings.trace=false
+
+
+
+
+
+
+
+package com.CabBooking;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class CabBookingApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
