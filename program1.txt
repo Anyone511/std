@@ -1,0 +1,170 @@
+package com.SpringCRUD;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SpringCrudApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringCrudApplication.class, args);
+	}
+
+}
+
+
+
+
+
+
+package com.SpringCRUD.Controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import com.SpringCRUD.Entity.student;
+import com.SpringCRUD.Repository.StdRepo;
+
+@RestController
+public class StdController{
+@Autowired
+private StdRepo repo;
+@GetMapping("/studentdetails")
+public List<student> getAllstd(){
+	return repo.findAll();
+}
+@PostMapping("/studentsave")
+public student Addstudents(@RequestBody student std) {
+	return repo.save(std);
+}
+@PutMapping("studentupdate")
+public student UpdateStd(@RequestBody student std) {
+	return repo.save(std);
+}
+@DeleteMapping("studentdelete/{id}")
+public void deleteStd(@PathVariable int id) {
+	repo.deleteById(id);
+}
+}
+
+
+
+
+
+
+
+
+package com.SpringCRUD.Entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+@Entity
+public class student {
+@Id
+private int id;
+@Column(name="sname")
+private String sname;
+@Column(name="dept")
+private String dept;
+public student() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+public student(int id, String sname, String dept) {
+	super();
+	this.id = id;
+	this.sname = sname;
+	this.dept = dept;
+}
+public int getId() {
+	return id;
+}
+public void setId(int id) {
+	this.id = id;
+}
+public String getSname() {
+	return sname;
+}
+public void setSname(String sname) {
+	this.sname = sname;
+}
+public String getDept() {
+	return dept;
+}
+public void setDept(String dept) {
+	this.dept = dept;
+}
+@Override
+public String toString() {
+	return "student [id=" + id + ", sname=" + sname + ", dept=" + dept + "]";
+}
+}
+
+
+
+
+
+
+
+package com.SpringCRUD.Repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.SpringCRUD.Entity.student;
+
+@Repository
+public interface StdRepo extends JpaRepository<student, Integer>{
+}
+
+
+
+
+
+
+
+
+
+spring.application.name=SpringCRUD
+server.port = 8090
+
+spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=TRUE
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+spring.h2.console.settings.trace=false
+
+
+
+
+
+
+package com.SpringCRUD;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class SpringCrudApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
+
+
+
+
