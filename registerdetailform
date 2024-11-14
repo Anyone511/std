@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title>Registraton form</title>
+        <script>
+            function passvalues()
+            {
+                var name=document.getElementById("name").value
+                var email=document.getElementById("email").value
+                var address=document.getElementById("address").value
+                localStorage.setItem("name".name);
+                localStorage.setItem("email".email);
+                localStorage.setItem("address",address);
+                return;
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Registration form</h1>
+        <form action="Detail.html">
+            <fieldset>
+                <legend>Registraton</legend>
+                <label>name</label>
+                <input type="text"id="name"/><br><br>
+                <label>email id</label>
+                <input type="email"id="email"/><br><br>
+                <label>address</label>
+                <input type="text"id="address"/><br><br>
+                <input type="submit"value="submit"onclick="passvalues()"/>
+            </fieldset>
+        </form>
+    </body>
+</html>
+
+
+
+
+
+<html>
+    <head>
+        <title>Details</title>
+    </head>
+    <body>
+        <form>
+            your name is :<p id ="name"></p><br>
+            your email is:<p id="email"></p><br>
+            your address is:<p id="address"></p><br>
+            <script>
+                document.getElementById("name").innerHTML=localStorage.getItem("name");
+                document.getElementById("email").innerHTML=localStorage.getItem("email");
+                document.getElementById("address").innerHTML=localStorage.getItem("address");
+            </script>
+        </form>
+    </body>
+</html>
+
+
+
+
+
+
