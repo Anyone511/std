@@ -1,0 +1,71 @@
+import React,{Component}from 'react';
+import ComponentB from './ComponentB';
+
+class ComponentA extends Component{
+    render(){
+        return<ComponentB/>;
+    }
+}
+export default ComponentA;
+
+
+
+import React  from 'react';
+import{Userconsumer} from './Usercontext';
+
+function ComponentC(){
+     return(
+        <Userconsumer>
+            {username => {
+                return <div> Hello,{username}</div>;
+            }}
+        </Userconsumer>
+    );
+}
+
+export default ComponentC;
+
+
+import React from 'react';
+
+const Usercontext=React.createcontext();
+
+  const Userprovider=Usercontext.Provider;
+  const Userconsumer = Usercontext.Consumer;
+
+export {Userprovider,Userconsumer};
+
+
+
+
+import './App.css'
+import React,{Component} from 'react';
+import { Userprovider } from "./Usercontext";
+import ComponentC from './ComponentC';
+
+class App extends Component{
+  render(){
+    return(
+      <div className="App">
+        <Userprovider value="anaya">
+          <ComponentC/>
+        </Userprovider>
+      </div>
+    )
+  }
+}
+export default App;
+
+
+
+
+import React,{Component} from 'react';
+import ComponentC from './Component/ComponentC';
+
+class ComponentB extends Component {
+    render(){
+        return<ComponentC/>;
+    }
+}
+
+export default ComponentB;
