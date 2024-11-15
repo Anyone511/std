@@ -1,0 +1,33 @@
+creating table
+
+db.CreateCollection("student")
+
+
+show tables
+student
+
+
+insert()method
+
+db.student.insert({"id":1,"name":"chandru","marks":300})
+
+db.student.insertmany([{"id":1,"name":"chandru","mark":390},{"id":2,"name":"suman","marks":280"}])
+
+
+
+view data 
+
+db.student.find({})
+
+
+
+update
+
+
+db.student.update({"name":"chandru"},{$set;{"name":"sekhar","id":5}})
+
+
+
+
+delete 
+db.student.deleteOne({"name":"sekhar"})
