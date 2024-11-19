@@ -94,3 +94,14 @@ const Nopage = () => {
     return <h1>404</h1>
 };
 export default Nopage;
+
+
+
+
+npm install react react-dom react-router-dom
+npm list react react-dom react-router-dom
+npm ls react
+npm start
+ npm i -D react-router-dom
+
+
