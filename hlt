@@ -1,0 +1,171 @@
+package com.Health;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class HealthApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(HealthApplication.class, args);
+	}
+
+}
+
+
+
+
+
+
+
+
+package com.Health.Controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import com.Health.Entity.Health;
+import com.Health.Repository.HealthRepo;
+
+@RestController
+
+public class HealthController {
+
+
+@Autowired
+private HealthRepo repo;
+@GetMapping("/Healthdetails")
+public List<Health> getAllstd(){
+	return repo.findAll();
+}
+@PostMapping("/Healthsave")
+public Health AddHealth(@RequestBody Health Health) {
+	return repo.save(Health);
+}
+@PutMapping("Healthupdate")
+public Health UpdateHealth(@RequestBody Health Health) {
+	return repo.save(Health);
+}
+@DeleteMapping("Healthdelete/{logId}")
+public void deleteHealth(@PathVariable int logId) {
+	repo.deleteById(logId);
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+package com.Health.Entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
+public class Health {
+@Id
+	 private Long logId;  
+	    private Long userId;  
+	    @Column
+	    private String exerciseType; // e.g., Running, Swimming, etc.  
+	    private int durationInMinutes; // Duration of the exercise  
+
+	    // Getters and Setters  
+	    public Long getLogId() {  
+	        return logId;  
+	    }  
+
+	    public void setLogId(Long logId) {  
+	        this.logId = logId;  
+	    }  
+
+	    public Long getUserId() {  
+	        return userId;  
+	    }  
+
+	    public void setUserId(Long userId) {  
+	        this.userId = userId;  
+	    }  
+
+	    public String getExerciseType() {  
+	        return exerciseType;  
+	    }  
+
+	    public void setExerciseType(String exerciseType) {  
+	        this.exerciseType = exerciseType;  
+	    }  
+
+	    public int getDurationInMinutes() {  
+	        return durationInMinutes;  
+	    }  
+
+	    public void setDurationInMinutes(int durationInMinutes) {  
+	        this.durationInMinutes = durationInMinutes;  
+	    }  
+	
+	 @Override
+    public String toString() {
+        return "Health[logid=" + logId + ",userId=" + userId + ",exerciseType=" + exerciseType + ",durationInMinutes="+ durationInMinutes+"]";
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+package com.Health.Repository;
+
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.Health.Entity.Health;
+
+@Repository
+public interface HealthRepo extends JpaRepository<Health, Integer>{
+}
+
+
+
+
+
+
+
+
+
+
+
+spring.application.name=Health
+server.port = 8011
+
+spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=TRUE
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+spring.h2.console.settings.trace=false
+
+
